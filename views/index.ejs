@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Onfido SDK Demo</title>
+    <link rel="stylesheet" type="text/css" href="https://assets.onfido.com/web-sdk-releases/12.0.0/style.css"/>
+    <script type="text/javascript" src="https://assets.onfido.com/web-sdk-releases/12.0.0/onfido.min.js"></script>
+  </head>
+  <body>
+    <div id="onfido-mount"></div>
+    <script type="text/javascript">
+      //<![CDATA[
+      Onfido.init({
+        useModal: false,
+        token: "<%= sdkToken %>",
+        onComplete: function (data) {
+          console.log(data)
+          // callback for when everything is complete
+          console.log("everything is complete");
+        },
+        workflowRunId: "<%= workflowRunId %>",
+      });
+      //]]>
+    </script>
+  </body>
+</html>
+ 
