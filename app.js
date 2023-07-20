@@ -5,7 +5,7 @@ app.use(express.urlencoded({ extended: true }));
 const ejs = require('ejs');
 const { Onfido, Region, OnfidoApiError } = require("@onfido/api");
 
-
+app.use(express.static(__dirname+'/public'));
 
 app.set('view engine', 'ejs');
 
@@ -48,7 +48,8 @@ app.post('/submit', async (req, res) => {
    
     res.render('index', { 
       sdkToken: generateSdkToken, 
-      workflowRunId: workflowRunId 
+      workflowRunId: workflowRunId,
+     
       
     });
   } catch (error) {
@@ -63,6 +64,8 @@ app.post('/submit', async (req, res) => {
 });
 
 const port = 3000;
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
