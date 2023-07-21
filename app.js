@@ -30,10 +30,13 @@ app.post('/submit', async (req, res) => {
       firstName: firstName,
       lastName: lastName, 
     });
-    const applicantId = applicant.id;
+    
+    //const applicantId = applicant.id;
+
+    console.log("applicant uuid: " + applicant.id);
 
     const generateSdkToken = await onfido.sdkToken.generate({
-      applicantId: applicantId,
+      applicantId: applicant.id, 
       referrer: "*://*/*"
     });
 
