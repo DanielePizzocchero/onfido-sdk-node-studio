@@ -34,21 +34,21 @@ app.post('/submit', async (req, res) => {
     //const applicantId = applicant.id;
 
     //console.log("applicant uuid: " + applicant.id);
-    console.log("applicant uuid: " + "bad8436-e774-4f9a-8c4c-7eb250319611");
+    console.log("applicant uuid: " + "1bad8436-e774-4f9a-8c4c-7eb250319611");
 
     
 
     const generateSdkToken = await onfido.sdkToken.generate({
       //applicantId: applicant.id, 
 
-      applicantId: "bad8436-e774-4f9a-8c4c-7eb250319611",
+      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611,
       referrer: "*://*/*"
     });
 
   
     const workflowRun = await onfido.workflowRun.create({
       //applicantId: applicant.id,
-      applicantId: "bad8436-e774-4f9a-8c4c-7eb250319611",
+      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611",
       workflowId: workflowId
     });
     
