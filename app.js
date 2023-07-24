@@ -18,7 +18,25 @@ app.post('/submit', async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const workflowId = req.body.workflowId;
-    const apiToken = req.body.apiToken
+    const apiToken = req.body.apiToken;
+    let applicantId = req.body.applicantId;
+    const disableWelcomeScreen = req.body.disableWelcomeScreen;
+    let disableWelcomeScreenVal = "";
+
+    console.log(`applicantId at start ${applicantId}`);
+    console.log(`disableWelcomeScreen at start ${disableWelcomeScreen}`);
+
+    if (disableWelcomeScreen == "Y"){
+      disableWelcomeScreenVal =  true;
+    }else{
+      disableWelcomeScreenVal =  false;
+    }
+
+    if (applicantId == ""){
+      console.log(`applicantId at start is empty ${applicantId}`);
+    }
+
+    console.log(`disableWelcomeScreenVal  ${disableWelcomeScreenVal}`);
 
     const onfido = new Onfido({
       //apiToken: process.env.ONFIDO_API_TOKEN,
@@ -26,29 +44,25 @@ app.post('/submit', async (req, res) => {
       region: Region.EU
     });
 
-    const applicant = await onfido.applicant.create({
-      firstName: firstName,
-      lastName: lastName, 
-    });
-    
-    //const applicantId = applicant.id;
-
-    //console.log("applicant uuid: " + applicant.id);
-    console.log("applicant uuid: " + "1bad8436-e774-4f9a-8c4c-7eb250319611");
-
+    if ((applicantId == "")){
+      const applicant = await onfido.applicant.create({
+        firstName: firstName,
+        lastName: lastName, 
+      });
+      applicantId = applicant.id;
+    }
     
 
+    
+    console.log("applicant uuid: " + applicantId);
+    
     const generateSdkToken = await onfido.sdkToken.generate({
-      //applicantId: applicant.id, 
-
-      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611",
+      applicantId: applicantId, 
       referrer: "*://*/*"
     });
-
   
     const workflowRun = await onfido.workflowRun.create({
-      //applicantId: applicant.id,
-      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611",
+      applicantId: applicantId,
       workflowId: workflowId
     });
     
@@ -58,16 +72,17 @@ app.post('/submit', async (req, res) => {
     res.render('index', { 
       sdkToken: generateSdkToken, 
       workflowRunId: workflowRunId,
+      disableWelcomeScreenVal: disableWelcomeScreenVal
      
       
     });
   } catch (error) {
     if (error instanceof OnfidoApiError) {
-      console.log(error.message);
-      console.log(error.type);
-      console.log(error.isClientError());
+      console.log(`error.message ${error.message}`);
+      console.log(`error.type ${error.type}`);
+      console.log(`error.isClientError() ${error.isClientError()}`);
     } else {
-      console.log(error.message);
+      console.log(`error.message ${error.message}`);
     }
   }
 });
