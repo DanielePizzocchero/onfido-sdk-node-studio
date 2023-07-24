@@ -41,7 +41,7 @@ app.post('/submit', async (req, res) => {
     const generateSdkToken = await onfido.sdkToken.generate({
       //applicantId: applicant.id, 
 
-      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611,
+      applicantId: "1bad8436-e774-4f9a-8c4c-7eb250319611",
       referrer: "*://*/*"
     });
 
