@@ -9,6 +9,7 @@
     
     <link rel="stylesheet" type="text/css" href="https://assets.onfido.com/web-sdk-releases/13.6.1/style.css"/>
     <script type="text/javascript" src="https://assets.onfido.com/web-sdk-releases/13.6.1/onfido.min.js"></script>
+    <script>addEventListener('userAnalyticsEvent', (event) => console.log(event.detail));</script>
   </head>
   <body>
     <div id="onfido-mount"></div>
@@ -21,9 +22,8 @@
         disableWelcomeScreen: <%= disableWelcomeScreenVal %>,
         token: "<%= sdkToken %>",
         onComplete: function (data) {
+          console.log("Captured data: ")
           console.log(data)
-          // callback for when everything is complete
-          console.log("everything is complete");
         },
         workflowRunId: "<%= workflowRunId %>",
       });
