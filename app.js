@@ -38,36 +38,41 @@ app.post('/submit', async (req, res) => {
 
     console.log(`disableWelcomeScreenVal  ${disableWelcomeScreenVal}`);
 
-    const onfido = new Onfido({
-      //apiToken: process.env.ONFIDO_API_TOKEN,
+    const onfido = new Onfido({   
       apiToken: apiToken,
       region: Region.EU
-    });
-
+    })
     if ((applicantId == "")){
       const applicant = await onfido.applicant.create({
         firstName: firstName,
         lastName: lastName, 
+        dob: "2000-01-01",
+        email: "test@test.com",
+        phoneNumber: "+447900111111",
       });
-      applicantId = applicant.id;
+     applicantId = applicant.id;
     }
     
 
     
     console.log("applicant uuid: " + applicantId);
+
+    const customData = {
+      document_to_sign_url: "https://www.termsfeed.com/public/uploads/2021/12/sample-terms-conditions-agreement.pdf",
+      country_of_operation: "FRA"
+    }
     
-    const generateSdkToken = await onfido.sdkToken.generate({
-      applicantId: applicantId, 
-      referrer: "*://*/*"
-    });
   
     const workflowRun = await onfido.workflowRun.create({
       applicantId: applicantId,
-      workflowId: workflowId
+      workflowId: workflowId,
+      customData: customData
     });
     
+    //console.log("workflowRun: " + JSON.stringify(workflowRun));
 
     const workflowRunId = workflowRun.id;
+    const generateSdkToken = workflowRun.sdkToken;
    
     res.render('index', { 
       sdkToken: generateSdkToken, 

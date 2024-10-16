@@ -90,18 +90,66 @@ html,
     
     <script type="text/javascript">
       //<![CDATA[
-      addEventListener('userAnalyticsEvent', (event) => console.log(event.detail));
-      Onfido.init({
-        useModal: false,
+      //addEventListener('userAnalyticsEvent', (event) => console.log(event.detail));
+    
+      const instance = Onfido.init({
+        
         //disableWelcomeScreen: <%= disableWelcomeScreenVal %>,
-        disableWelcomeScreen: "N",
-        token: "<%= sdkToken %>",
-        onComplete: function (data) {
-          console.log("Captured data: ")
-          console.log(data)
+        language: 'en_GB',
+        
+
+        translations: {
+            
+            en_GB: {
+                  document: {
+                    selection: {
+                      title: 'Choose your Identity Document'}
+                  },
+                    retry: {
+                        button: {
+                          "default": "Try again",
+                          "expired_document": "Try again",
+                          "generic_document_issue": "Try again",
+                          "generic_selfie_issue": "Try again",
+                          "unaccepted_document": "Try again"
+                        }
+                    }
+                },
+                it: {
+                  document: {
+                    selection: {
+                      title: 'Choose your Identity Document ITA'}
+                  },
+                    retry: {
+                        button: {
+                          "default": "Try again ITA",
+                          "expired_document": "Try again ITA",
+                          "generic_document_issue": "Try again ITA",
+                          "generic_selfie_issue": "Try again ITA",
+                          "unaccepted_document": "Try again ITA"
+                        }
+                }
+            }
         },
+        
+        token: "<%= sdkToken %>",
         workflowRunId: "<%= workflowRunId %>",
+        onComplete: function (data) {
+          console.log("Captured data: ");
+          console.log(data);
+          //setTimeout(() => {
+
+            //    instance.tearDown();
+
+//          }, 1) // 1 millisecond
+
+        },
+        onError: function(error) {
+            console.log('ERROR Details ==>', error)
+        }        
       });
+
+      
       //]]>
     </script>
     
