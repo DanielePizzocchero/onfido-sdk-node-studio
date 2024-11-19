@@ -65,8 +65,8 @@ app.post('/submit', async (req, res) => {
   
     const workflowRun = await onfido.workflowRun.create({
       applicantId: applicantId,
-      workflowId: workflowId,
-      customData: customData
+      workflowId: workflowId
+      //customData: customData
     });
     
     //console.log("workflowRun: " + JSON.stringify(workflowRun));
