@@ -20,23 +20,23 @@ app.post('/submit', async (req, res) => {
     const workflowId = req.body.workflowId;
     const apiToken = req.body.apiToken;
     let applicantId = req.body.applicantId;
-    const disableWelcomeScreen = req.body.disableWelcomeScreen;
+    //const disableWelcomeScreen = req.body.disableWelcomeScreen;
     let disableWelcomeScreenVal = "";
 
     console.log(`applicantId at start ${applicantId}`);
-    console.log(`disableWelcomeScreen at start ${disableWelcomeScreen}`);
+    //console.log(`disableWelcomeScreen at start ${disableWelcomeScreen}`);
 
-    if (disableWelcomeScreen == "Y"){
-      disableWelcomeScreenVal =  true;
-    }else{
-      disableWelcomeScreenVal =  false;
-    }
+    //if (disableWelcomeScreen == "Y"){
+    //  disableWelcomeScreenVal =  true;
+    //}else{
+    //  disableWelcomeScreenVal =  false;
+    //}
 
     if (applicantId == ""){
       console.log(`applicantId at start is empty ${applicantId}`);
     }
 
-    console.log(`disableWelcomeScreenVal  ${disableWelcomeScreenVal}`);
+    //console.log(`disableWelcomeScreenVal  ${disableWelcomeScreenVal}`);
 
     const onfido = new Onfido({   
       apiToken: apiToken,
@@ -77,7 +77,7 @@ app.post('/submit', async (req, res) => {
     res.render('index', { 
       sdkToken: generateSdkToken, 
       workflowRunId: workflowRunId,
-      disableWelcomeScreenVal: disableWelcomeScreenVal
+      //disableWelcomeScreenVal: disableWelcomeScreenVal
      
       
     });
