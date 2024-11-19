@@ -83,6 +83,7 @@ html,
 </style>
   <script src="https://sdk.onfido.com/v14"></script>
   <script type="text/javascript">
+   
 // Simple throttle implementation
 function throttle(func, delay) {
     let lastTime = 0;
@@ -98,16 +99,16 @@ function throttle(func, delay) {
 // Function to create and display the banner
 function updateBanner() {
     let existingBanner = document.querySelector('#dynamic-banner');
-    let textContent = "No target iframes found on this page.";
+    let textContent = " ";
 
     // Check for specific iframes by name attributes, excluding iframes with class 'prefetch'
     const iframe1 = document.querySelector('iframe[name="onfido-proof_of_address_capture_17cb8"]:not(.prefetch)');
     const iframe2 = document.querySelector('iframe[name="onfido-proof_of_address_capture_91810"]:not(.prefetch)');
 
     if (iframe1) {
-        textContent = "text1";
+        textContent = "1st PoA document";
     } else if (iframe2) {
-        textContent = "text2";
+        textContent = "2nd PoA document";
     }
 
     if (existingBanner) {
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBanner();
 });
 
-
+ 
   </script>
   
 </head>
@@ -195,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           "unaccepted_document": "Try again"
                         }
                     }
-                },
+                },  
                 it: {
                   document: {
                     selection: {
