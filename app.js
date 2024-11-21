@@ -21,7 +21,7 @@ app.post('/submit', async (req, res) => {
     const apiToken = req.body.apiToken;
     let applicantId = req.body.applicantId;
     //const disableWelcomeScreen = req.body.disableWelcomeScreen;
-    let disableWelcomeScreenVal = "";
+    //let disableWelcomeScreenVal = "";
 
     console.log(`applicantId at start ${applicantId}`);
     //console.log(`disableWelcomeScreen at start ${disableWelcomeScreen}`);
