@@ -82,6 +82,86 @@ html,
 
 </style>
   <script src="https://sdk.onfido.com/v14"></script>
+  <script type="text/javascript">
+      // Simple throttle implementation
+function throttle(func, delay) {
+    let lastTime = 0;
+    return function() {
+        const now = new Date().getTime();
+        if (now - lastTime >= delay) {
+            func.apply(this, arguments);
+            lastTime = now;
+        }
+    };
+}
+
+// Function to create and display the banner
+function updateBanner() {
+    let existingBanner = document.querySelector('#dynamic-banner');
+    let textContent = "";
+
+    // Check for specific iframes by name attributes, excluding iframes with class 'prefetch'
+    const iframe1 = document.querySelector('iframe[name="onfido-proof_of_address_capture_17cb8"]:not(.prefetch)');
+    const iframe2 = document.querySelector('iframe[name="onfido-proof_of_address_capture_91810"]:not(.prefetch)');
+
+    if (iframe1) {
+        textContent = "1st PoA Document";
+    } else if (iframe2) {
+        textContent = "2nd PoA Document";
+    }
+
+    if (existingBanner) {
+        existingBanner.textContent = textContent; // Update the existing banner
+    } else {
+        const bannerDiv = document.createElement('div');
+        bannerDiv.id = 'dynamic-banner'; // Set an ID for easy identification
+        bannerDiv.style.position = 'fixed';
+        bannerDiv.style.top = '0';
+        bannerDiv.style.width = '100%';
+        bannerDiv.style.backgroundColor = '#ffe0e0';
+        bannerDiv.style.color = 'red';
+        bannerDiv.style.textAlign = 'center';
+        bannerDiv.style.padding = '10px';
+        bannerDiv.style.zIndex = '10000';
+        bannerDiv.style.fontSize = '18px';
+        bannerDiv.style.fontWeight = 'bold';
+        bannerDiv.textContent = textContent;
+        document.body.insertBefore(bannerDiv, document.body.firstChild);
+    }
+}
+
+// Create throttled version of the updateBanner function with a 300ms delay
+const throttledCheck = throttle(() => {
+    updateBanner();
+}, 300);
+
+// Ensure the script runs when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listener to trigger on every click
+    document.addEventListener('click', throttledCheck);
+
+    // Run the banner update every 500ms
+    setInterval(() => {
+        updateBanner();
+    }, 500);
+
+    // Use MutationObserver to detect iframe additions or DOM changes dynamically
+    const observer = new MutationObserver(() => {
+        updateBanner();
+    });
+
+    // Safely observe the document body for changes
+    if (document.body) {
+        observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+        console.error('Document body is not available to observe.');
+    }
+
+    // Initial update on page load
+    updateBanner();
+});
+
+  </script>
   
 </head>
 
